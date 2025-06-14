@@ -13,6 +13,7 @@ function App() {
     public: false
   };
   const [formData, setFormData] = useState(initialForm)
+  const [showAlert, setShowAlert] = useState(false)
 
   const handleChange = (e) => {
     const { name, value, checked, type } = event.target;
@@ -23,7 +24,9 @@ function App() {
     event.preventDefault();
     console.log("invio i dati al server", formData)
     axios.post(apiUrl , formData).then ((resp) => 
-      console.log(resp.data)
+      console.log(resp.data), 
+    setShowAlert(true),
+    setFormData(initialForm)
     )
   }
 
@@ -57,6 +60,8 @@ function App() {
         <button type="submit" className="btn btn-primary mt-3">Submit</button>
       </form>
       </div>
+      {showAlert && <div className='alert alert-success'>I dati sono stati inviati</div>}
+
     </>
   )
 }
